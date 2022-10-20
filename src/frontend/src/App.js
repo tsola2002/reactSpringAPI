@@ -11,6 +11,7 @@ import {
   LoadingOutlined,
   PlusOutlined
 } from "@ant-design/icons";
+import StudentDrawerForm from "./StudentDrawerForm";
 
 function App() {
   function getItem(label, key, icon, children) {
@@ -43,6 +44,7 @@ function App() {
   const [collapsed, setCollapsed] = useState(false);
   const [fetching, setFetching] = useState(true);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const [showDrawer, setShowDrawer] = useState(false);
 
 
   const columns = [
@@ -78,13 +80,18 @@ function App() {
     if (students.length <= 0) {
       return "No Data Available";
     }
-    return (
+    return <>
+                <StudentDrawerForm
+                    showDrawer={showDrawer}
+                    setShowDrawer={setShowDrawer}
+                    fetchStudents={fetchStudents}
+                />
       <Table
         dataSource={students}
         columns={columns}
         bordered
         title={() => <Button
-                             //onClick={() => setShowDrawer(!showDrawer)}
+                             onClick={() => setShowDrawer(!showDrawer)}
                              type="primary" shape="round" icon={<PlusOutlined/>} size="small">
                              Add New Student
                              </Button>}
@@ -92,7 +99,8 @@ function App() {
         scroll={{ y: 500 }}
 
       />
-    );
+      </>
+    ;
   };
 
 
